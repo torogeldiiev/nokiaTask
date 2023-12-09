@@ -113,7 +113,6 @@ def run_interface(cur):
 
     print(movies)
 
-
 if __name__ == "__main__":
     # Connect to the database
     conn, cur = connect_to_database()
