@@ -83,17 +83,13 @@ def filter_movies_by_actor_regex(movies_list, actor_regex):
 
 
 # Function to add a person to the database
-def add_person(cur):
+def add_person(cur, name, birth_year, is_director):
     try:
-        name = input("Enter the name of the person: ")
-        birth_year = int(input("Enter the year of birth for the person: "))
-        is_director = input("Is the person a director? (yes/no): ").lower() == 'yes'
-
         cur.execute('INSERT INTO people (name, birth_year, is_director) VALUES (%s, %s, %s) RETURNING person_id',
                     (name, birth_year, is_director))
         new_person_id = cur.fetchone()[0]
 
-        print(f"Person '{name}' added successfully.")
+        print(f"Person '{name}' was added successfully.")
 
         # Commit the changes to the database
         cur.connection.commit()
@@ -175,10 +171,8 @@ def add_movie(cur):
 
 
 # Function to delete a person from the database
-def delete_person(cur):
+def delete_person(cur, name_to_delete):
     try:
-        name_to_delete = input("Enter the name of the person to delete: ")
-
         # Check if the person exists in the database
         cur.execute('SELECT person_id, is_director FROM People WHERE name = %s', (name_to_delete,))
         person_result = cur.fetchone()

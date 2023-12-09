@@ -69,7 +69,10 @@ def run_interface(cur):
     elif main_command == "a":
         # Check for different flags associated with the 'a' command
         if "-p" in flags:
-            add_person(cur)
+            name = input("Enter the name of the person: ")
+            birth_year = int(input("Enter the year of birth for the person: "))
+            is_director = input("Is the person a director? (yes/no): ").lower() == 'yes'
+            add_person(cur,name,birth_year,is_director)
         elif "-m" in flags:
             add_movie(cur)
         else:
@@ -79,7 +82,8 @@ def run_interface(cur):
     elif main_command == "d":
         # Check for the '-p' flag to delete a person
         if "-p" in flags:
-            delete_person(cur)
+            name_to_delete = input("Enter the name of the person to delete: ")
+            delete_person(cur, name_to_delete)
 
     # Function to format movie information, optionally including actors' details
     def format_movie(movie, include_actors=True):
@@ -102,16 +106,12 @@ def run_interface(cur):
     formatted_movies_with_actors = [format_movie(movie) for movie in movies]
     formatted_movies = [format_movie(movie, include_actors=False) for movie in movies]
 
-    if len(formatted_movies_with_actors) == 0 or len(formatted_movies) == 0:
-        print("Nothing was found")
-
     # Print formatted movie information based on user input
     if len(command) > 1:
         print("\n".join(formatted_movies_with_actors))
     elif len(command) == 1:
         print("\n".join(formatted_movies))
 
-    print(movies)
 
 if __name__ == "__main__":
     # Connect to the database

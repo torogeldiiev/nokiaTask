@@ -1,14 +1,14 @@
 import psycopg2
-
+import os
 
 def connect_to_database():
     try:
         conn = psycopg2.connect(
-            host="localhost",
-            dbname="movies",
-            user="postgres",
-            password="31082013bA",
-            port=5433
+            host=os.environ.get('DB_HOST', 'localhost'),
+            dbname=os.environ.get('DN_NAME', 'movies'),
+            user=os.environ.get('DB_USER', 'postgres'),
+            password=os.environ.get('DB_PASSWORD', '31082013bA'),
+            port=os.environ.get('DB_PORT', '5433')
         )
 
         cur = conn.cursor()
