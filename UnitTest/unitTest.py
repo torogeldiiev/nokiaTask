@@ -1,5 +1,5 @@
 import unittest
-from userCommands import *
+from nokiaTask.userCommands import *
 import psycopg2
 
 

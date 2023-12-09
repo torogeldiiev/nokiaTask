@@ -1,6 +1,6 @@
 import shlex
-from config import *
-from userCommands import *
+from nokiaTask.config import *
+from nokiaTask.userCommands import *
 
 
 def run_interface(cur):

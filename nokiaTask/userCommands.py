@@ -65,7 +65,6 @@ def filter_movies_by_title_regex(movies_list, title_regex):
     return [movie for movie in movies_list if re.match(title_regex, movie[1])]
 
 
-
 # Function to filter list of movies by director name using regex
 def filter_movies_by_director_regex(movies_list, director_regex):
     return [movie for movie in movies_list if re.match(director_regex, movie[2])]
@@ -81,7 +80,6 @@ def filter_movies_by_actor_regex(movies_list, actor_regex):
             if re.match(actor_regex, name.lstrip(' ')):
                 res.append(movie)
     return res
-
 
 
 # Function to add a person to the database
