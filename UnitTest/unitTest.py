@@ -19,7 +19,7 @@ class MyTestCase(unittest.TestCase):
         expected_result = [(2, 'Django Unchained', 'Quentin Tarantino', 2012, '02:45'),
                            (3, 'Pulp Fiction', 'Quentin Tarantino', 1994, '02:34'),
                            (1, 'Inception 1', 'Christopher Nolan', 2010, '02:28'),
-                           (4, 'Inception 2', 'Christopher Nolan', 2023, '02:24')]
+                           (8, 'Inception 2', 'Christopher Nolan', 2022, '02:50')]
 
         self.assertEqual(result, expected_result)
 
@@ -34,11 +34,10 @@ class MyTestCase(unittest.TestCase):
 
         cur = conn.cursor()
         result = get_movies_with_details(cur, get_all_movies(cur))
-        expected_result = [(2, 'Django Unchained', 'Quentin Tarantino', 2012, '02:45', 'Samuel L. Jackson at age 64'),
-                           (3, 'Pulp Fiction', 'Quentin Tarantino', 1994, '02:34',
-                            'Samuel L. Jackson at age 46; Uma Thurman at age 24'),
-                           (1, 'Inception 1', 'Christopher Nolan', 2010, '02:28',
-                            'Leonardo DiCaprio at age 36; Tom Hardy at age 33')]
+        expected_result = [(2, 'Django Unchained', 'Quentin Tarantino', 2012, '02:45', 'Quentin Tarantino at age 49; Samuel L. Jackson at age 64'),
+                           (3, 'Pulp Fiction', 'Quentin Tarantino', 1994, '02:34', 'Quentin Tarantino at age 31; Samuel L. Jackson at age 46; Uma Thurman at age 24'),
+                           (1, 'Inception 1', 'Christopher Nolan', 2010, '02:28', 'Leonardo DiCaprio at age 36; Tom Hardy at age 33'),
+                           (8, 'Inception 2', 'Christopher Nolan', 2022, '02:50', 'Leonardo DiCaprio at age 48')]
         self.assertEqual(result, expected_result)
 
     def test_filter_movies_by_title_regex(self):

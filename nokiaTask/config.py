@@ -1,5 +1,6 @@
 import psycopg2
 import os
+import sys
 
 def connect_to_database():
     try:
@@ -13,16 +14,11 @@ def connect_to_database():
 
         cur = conn.cursor()
 
-        print('PostgreSQL database version:')
-        cur.execute('SELECT version()')
-        db_version = cur.fetchone()
-        print(db_version)
-
         return conn, cur
 
     except psycopg2.Error as e:
         print(f"Unable to connect to the database {e}")
-        return None, None
+        return sys.exit(1)
 
 
 def disconnect_from_database(conn, cur):

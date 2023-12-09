@@ -72,7 +72,7 @@ def run_interface(cur):
             name = input("Enter the name of the person: ")
             birth_year = int(input("Enter the year of birth for the person: "))
             is_director = input("Is the person a director? (yes/no): ").lower() == 'yes'
-            add_person(cur,name,birth_year,is_director)
+            add_person(cur, name, birth_year, is_director)
         elif "-m" in flags:
             add_movie(cur)
         else:
@@ -112,6 +112,8 @@ def run_interface(cur):
     elif len(command) == 1:
         print("\n".join(formatted_movies))
 
+
+    print(movies)
 
 if __name__ == "__main__":
     # Connect to the database

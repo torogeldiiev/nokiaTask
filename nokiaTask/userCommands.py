@@ -31,24 +31,26 @@ def get_movies_with_details(cur, movie_list):
 
         query = '''
         SELECT 
-            m.movie_id,
-            m.title,
-            d.name AS director_name,
-            m.release_year,
-            m.length_minutes,
-            STRING_AGG(a.name || ' at age ' || (m.release_year - a.birth_year)::text, '; ') AS actors_info
-        FROM 
-            Movies m
-        JOIN 
-            People d ON m.director_id = d.person_id
-        JOIN 
-            MoviePeople mp ON m.movie_id = mp.movie_id
-        JOIN 
-            People a ON mp.person_id = a.person_id AND a.is_director = FALSE
-        WHERE 
-            m.movie_id = %s
-        GROUP BY 
-            m.movie_id, m.title, d.name, m.release_year, m.length_minutes;
+    m.movie_id,
+    m.title,
+    d.name AS director_name,
+    m.release_year,
+    m.length_minutes,
+    STRING_AGG(
+        a.name || ' at age ' || (m.release_year - a.birth_year)::text, '; '
+    ) AS actors_info
+FROM 
+    Movies m
+JOIN 
+    People d ON m.director_id = d.person_id
+JOIN 
+    MoviePeople mp ON m.movie_id = mp.movie_id
+JOIN 
+    People a ON mp.person_id = a.person_id AND a.is_actor = TRUE
+WHERE 
+    m.movie_id = %s
+GROUP BY 
+    m.movie_id, m.title, d.name, m.release_year, m.length_minutes;
         '''
 
         cur.execute(query, (movie_id,))
