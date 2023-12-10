@@ -35,6 +35,7 @@ def run_interface(cur):
                 movies = filter_movies_by_title_regex(movies, regex_pattern)
             else:
                 print("Bad input format, provide a regex!")
+                sys.exit(1)
         if '-d' in flags:
             # Extract and apply director filter using regex pattern
             regex_pattern = None
@@ -46,6 +47,7 @@ def run_interface(cur):
                 movies = filter_movies_by_director_regex(movies, regex_pattern)
             else:
                 print("Bad input format, provide a regex!")
+                sys.exit(1)
         if '-a' in flags:
             # Extract and apply actor filter using regex pattern
             regex_pattern = None
@@ -57,7 +59,8 @@ def run_interface(cur):
                 # Include actors' details and filter by actor regex
                 movies = filter_movies_by_actor_regex(get_movies_with_details(cur, movies), regex_pattern)
             else:
-                print("Provide a regex")
+                print("Bad input format, provide a regex!")
+                sys.exit(1)
         if "-la" in flags:
             # Sort movies by release date in ascending order
             movies = sorted(movies, key=lambda x: x[4])
@@ -72,7 +75,8 @@ def run_interface(cur):
             name = input("Enter the name of the person: ")
             birth_year = int(input("Enter the year of birth for the person: "))
             is_director = input("Is the person a director? (yes/no): ").lower() == 'yes'
-            add_person(cur, name, birth_year, is_director)
+            is_actor = input("Is the person an actor? (yes/no): ").lower() == 'yes'
+            add_person(cur, name, birth_year, is_director, is_actor)
         elif "-m" in flags:
             add_movie(cur)
         else:
@@ -112,8 +116,6 @@ def run_interface(cur):
     elif len(command) == 1:
         print("\n".join(formatted_movies))
 
-
-    print(movies)
 
 if __name__ == "__main__":
     # Connect to the database

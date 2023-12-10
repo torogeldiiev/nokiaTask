@@ -17,9 +17,10 @@ class MyTestCase(unittest.TestCase):
         cur = conn.cursor()
         result = get_all_movies(cur)
         expected_result = [(2, 'Django Unchained', 'Quentin Tarantino', 2012, '02:45'),
-                           (3, 'Pulp Fiction', 'Quentin Tarantino', 1994, '02:34'),
                            (1, 'Inception 1', 'Christopher Nolan', 2010, '02:28'),
-                           (8, 'Inception 2', 'Christopher Nolan', 2022, '02:50')]
+                           (8, 'Inception 2', 'Christopher Nolan', 2022, '02:50'),
+                           (3, 'Pulp Fiction', 'Quentin Tarantino', 1994, '02:34'),
+                           (9, 'Shindlers list', 'Steven Spielberg', 2022, '02:28')]
 
         self.assertEqual(result, expected_result)
 
@@ -35,9 +36,10 @@ class MyTestCase(unittest.TestCase):
         cur = conn.cursor()
         result = get_movies_with_details(cur, get_all_movies(cur))
         expected_result = [(2, 'Django Unchained', 'Quentin Tarantino', 2012, '02:45', 'Quentin Tarantino at age 49; Samuel L. Jackson at age 64'),
-                           (3, 'Pulp Fiction', 'Quentin Tarantino', 1994, '02:34', 'Quentin Tarantino at age 31; Samuel L. Jackson at age 46; Uma Thurman at age 24'),
                            (1, 'Inception 1', 'Christopher Nolan', 2010, '02:28', 'Leonardo DiCaprio at age 36; Tom Hardy at age 33'),
-                           (8, 'Inception 2', 'Christopher Nolan', 2022, '02:50', 'Leonardo DiCaprio at age 48')]
+                           (8, 'Inception 2', 'Christopher Nolan', 2022, '02:50', 'Leonardo DiCaprio at age 48'),
+                           (3, 'Pulp Fiction', 'Quentin Tarantino', 1994, '02:34', 'Quentin Tarantino at age 31; Samuel L. Jackson at age 46; Uma Thurman at age 24'),
+                           (9, 'Shindlers list', 'Steven Spielberg', 2022, '02:28', 'azamat at age 18; Quentin Tarantino at age 59')]
         self.assertEqual(result, expected_result)
 
     def test_filter_movies_by_title_regex(self):
@@ -103,7 +105,8 @@ class MyTestCase(unittest.TestCase):
         name = 'John Doe'
         birth_year = 1980
         is_director = False
-        add_person(cur, name, birth_year, is_director)
+        is_actor = True
+        add_person(cur, name, birth_year, is_director, is_actor)
 
         cur.execute('SELECT * FROM people WHERE name = %s', (name,))
         result = cur.fetchone()
@@ -112,6 +115,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(result[1], name)
         self.assertEqual(result[2], birth_year)
         self.assertEqual(result[3], is_director)
+        self.assertEqual(result[4], is_actor)
 
     def test_delete_person(self):
         conn = psycopg2.connect(
